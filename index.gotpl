@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+    </style>
+<title>Statistik</title>
+<head>
+<body>
+    <table>
+        <tr>
+            <th>Skr mnth</th>
+            <th>Skr Brsh</th>
+            <th>Skala10</th>
+            <th>Skala100</th>
+            <th>Skala5 Cara 1</th>
+            <th>Skala5 Cara 2</th>
+            <th>Skala5 Cara 3</th>
+        </tr>
+{{range .}}
+<tr>
+    <td>{{.Nilai}}</td>
+    <td>{{printf "%.2f" .Bersih}}</td>
+    <td>{{printf "%.2f" .Skala10}}</td>
+    <td>{{printf "%.2f" .Skala100}}</td>
+    <td>{{.Skala5CR1}}</td>
+    <td>{{.Skala5CR2}}</td>
+    <td>{{.Skala5CR3}}</td>
+</tr>
+{{end}}
+    </table>
+</body>
+</html>
