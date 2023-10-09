@@ -13,7 +13,7 @@ const nilaiMax = 20.0
 const pilihan = 4
 
 type PAP struct {
-    Nilai int
+    Nilai, Skala9, Skala11 int
     Bersih, Skala10, Skala100 float64
     Skala5CR1, Skala5CR2, Skala5CR3 string
 }
@@ -32,6 +32,8 @@ var nilaiSkala100 []float64
 var nilaiSkala5Cara1 []string
 var nilaiSkala5Cara2 []string
 var nilaiSkala5Cara3 []string
+var nilaiSkala9 []int
+var nilaiSkala11 []int
 
 func init() {
  tpl = template.Must(template.ParseGlob("./*.gotpl"))
@@ -88,6 +90,16 @@ func main() {
         nilaiSkala5Cara3 = append(nilaiSkala5Cara3, n)
     }
 
+    for _, v := range nilaiBersih {
+        n:= skala9(meanIdeal, standarDeviasiIdeal, v)
+        nilaiSkala9 = append(nilaiSkala9, n)
+    }
+
+    for _, v := range nilaiBersih {
+        n:= skala11(meanIdeal, standarDeviasiIdeal, v)
+        nilaiSkala11 = append(nilaiSkala11, n)
+    }
+
     for i := 0; i < 30; i++ {
         n := PAP{
             Nilai: nilai[i],
@@ -97,6 +109,8 @@ func main() {
             Skala5CR1: nilaiSkala5Cara1[i],
             Skala5CR2: nilaiSkala5Cara2[i],
             Skala5CR3: nilaiSkala5Cara3[i],
+            Skala9: nilaiSkala9[i],
+            Skala11: nilaiSkala11[i],
         }
         PAPS = append(PAPS, n)
     }
@@ -210,4 +224,76 @@ func skala5cara3 (mi float64, sdi float64, skorBersih float64) (skala5 string) {
     return
 }
 
+// Menghitung Nilai dengan metode skala 9
+func skala9 (mi float64, sdi float64, skorBersih float64) (skala9 int) {
+    var lim1, lim2, lim3, lim4, lim5, lim6, lim7, lim8 float64
+    lim1 = mi + 1.75*sdi
+    lim2 = mi + 1.25*sdi
+    lim3 = mi + 0.75*sdi
+    lim4 = mi + 0.25*sdi
+    lim5 = mi - 0.25*sdi
+    lim6 = mi - 0.75*sdi
+    lim7 = mi - 1.25*sdi
+    lim8 = mi - 1.75*sdi
+    switch {
+        case skorBersih > lim1:
+            skala9 = 9
+        case skorBersih > lim2:
+            skala9 = 8
+        case skorBersih > lim3:
+            skala9 = 7
+        case skorBersih > lim4:
+            skala9 = 6
+        case skorBersih > lim5:
+            skala9 = 5
+        case skorBersih > lim6:
+            skala9 = 4
+        case skorBersih > lim7:
+            skala9 = 3
+        case skorBersih > lim8:
+            skala9 = 2
+        default:
+            skala9 = 1
+    }
+    return
+}
 
+// Menghitung Nilai dengan metode skala 11
+func skala11 (mi float64, sdi float64, skorBersih float64) (skala11 int) {
+    var lim1, lim2, lim3, lim4, lim5, lim6, lim7, lim8, lim9, lim10 float64
+    lim1 = mi + 2.75*sdi
+    lim2 = mi + 1.75*sdi
+    lim3 = mi + 1.25*sdi
+    lim4 = mi + 0.75*sdi
+    lim5 = mi + 0.25*sdi
+    lim6 = mi - 0.25*sdi
+    lim7 = mi - 0.75*sdi
+    lim8 = mi - 1.25*sdi
+    lim9 = mi - 1.75*sdi
+    lim10 = mi - 2.75*sdi
+    switch {
+        case skorBersih > lim1:
+            skala11 = 10
+        case skorBersih > lim2:
+            skala11 = 9
+        case skorBersih > lim3:
+            skala11 = 8
+        case skorBersih > lim4:
+            skala11 = 7
+        case skorBersih > lim5:
+            skala11 = 6
+        case skorBersih > lim6:
+            skala11 = 5
+        case skorBersih > lim7:
+            skala11 = 4
+        case skorBersih > lim8:
+            skala11 = 3
+        case skorBersih > lim9:
+            skala11 = 3
+        case skorBersih > lim10:
+            skala11 = 3
+       default:
+            skala11 = 0
+    }
+    return
+}

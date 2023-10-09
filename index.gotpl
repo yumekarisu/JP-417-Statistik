@@ -30,6 +30,8 @@ tr:nth-child(even) {
             <th>Skala5 Cara 1</th>
             <th>Skala5 Cara 2</th>
             <th>Skala5 Cara 3</th>
+            <th>Skala9</th>
+            <th>Skala11</th>
         </tr>
 {{range .}}
 <tr>
@@ -40,6 +42,8 @@ tr:nth-child(even) {
     <td>{{.Skala5CR1}}</td>
     <td>{{.Skala5CR2}}</td>
     <td>{{.Skala5CR3}}</td>
+    <td>{{.Skala9}}</td>
+    <td>{{.Skala11}}</td>
 </tr>
 {{end}}
     </table>
